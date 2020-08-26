@@ -95,10 +95,10 @@ ifndef UNATTENDED_CREATION
 	@echo ""
 	@cat /tmp/wp-salts
 	@echo ""
-	# now, on your local machine, change directory to your new wordpress app, and push it up
-	@echo ""
-	@echo "cd $(APP_NAME)"
-	@echo "git push dokku master"
+	# # now, on your local machine, change directory to your new wordpress app, and push it up
+	# @echo ""
+	# @echo "cd $(APP_NAME)"
+	# @echo "git push dokku master"
 else
 	@chmod +x /tmp/wp-salts
 	$(DOKKU_CMD) apps:create $(APP_NAME)

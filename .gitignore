@@ -1,9 +1,9 @@
-*
-!Makefile
-!README.markdown
-!LICENSE.txt
-!.editorconfig
-!.gitignore
-!config/composer.json
-!config/composer.lock
-!config/wp-config.php
+# *
+# !Makefile
+# !README.markdown
+# !LICENSE.txt
+# !.editorconfig
+# !.gitignore
+# !config/composer.json
+# !config/composer.lock
+# !config/wp-config.php

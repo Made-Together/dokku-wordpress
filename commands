@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+PLUGIN_BASE_PATH="$PLUGIN_PATH"
+if [[ -n $DOKKU_API_VERSION ]]; then
+  PLUGIN_BASE_PATH="$PLUGIN_ENABLED_PATH"
+fi
+source "$PLUGIN_BASE_PATH/common/functions"
+
+case "$1" in
+  wordpress:init)
+		verify_app_name "$2"
+    APP="$2"
+
+    dokku apps:create "$APP"
+
+    # setup persistent storage
+    mkdir -p /var/lib/dokku/data/storage/$APP
+    chown -R 32767:32767 /var/lib/dokku/data/storage/$APP/plugins
+
+    # setup plugins persistent storage
+    mkdir -p /var/lib/dokku/data/storage/$APP/plugins
+    dokku storage:mount "$APP" /var/lib/dokku/data/storage/$APP/plugins:/app/wp-content/plugins
+
+    # setup upload persistent storage
+    mkdir -p /var/lib/dokku/data/storage/$APP/uploads
+    dokku storage:mount "$APP" /var/lib/dokku/data/storage/$APP/uploads:/app/wp-content/uploads
+
+    # setup languages persistent storage
+    mkdir -p /var/lib/dokku/data/storage/$APP/languages
+    dokku storage:mount "$APP" /var/lib/dokku/data/storage/$APP/languages:/app/wp-content/languages
+
+    # setup your mysql database and link it to your app
+    # if you're using MariaDB, replace mysql with mariadb
+    export MYSQL_IMAGE_VERSION=\"5.6\"
+    dokku mysql:create "$APP"-database
+    dokku mysql:link "$APP"-database "$APP"
+
+    # Generate random salts and add to dokku config
+    curl -so /tmp/wp-salts https://api.wordpress.org/secret-key/1.1/salt/
+    sed -i.bak -e 's/ //g' -e "s/);//g" -e "s/define('/$(DOKKU_CMD) config:set $(APP_NAME) /g" -e "s/SALT',/SALT=/g" -e "s/KEY',[ ]*/KEY=/g" /tmp/wp-salts && rm /tmp/wp-salts.bak
+		;;
+
+  help | wordpress:help)
+    help_content_func () {
+      declare desc="return help_content string"
+      cat<<help_content
+    wordpress:init <app>, Bootstrap wordpress setup for <app>
+    wordpress:destroy <app>, Remove wordpress setup for <app>
+help_content
+    }
+
+    if [[ $1 = "wordpress:help" ]] ; then
+        echo -e 'Usage: dokku wordpress:[init|destroy] <app>'
+        echo ''
+        echo 'Commands for dokku wordpress.'
+        echo ''
+        echo 'Commands:'
+        help_content_func | sort | column -c2 -t -s,
+    else
+        help_content_func
+    fi
+    ;;
+
+  *)
+    exit $DOKKU_NOT_IMPLEMENTED_EXIT
+    ;;
+
+esac
