@@ -45,7 +45,7 @@ case "$1" in
     help_content_func () {
       declare desc="return help_content string"
       cat<<help_content
-      wordpress, Plugin for managing WordPress instances
+wordpress, Plugin for managing WordPress instances
 help_content
     }
 
