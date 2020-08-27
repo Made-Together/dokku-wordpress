@@ -15,20 +15,20 @@ case "$1" in
     dokku apps:create "$APP"
 
     # setup persistent storage
-    mkdir -p /var/lib/dokku/data/storage/$APP
-    sudo chown -R 32767:32767 /var/lib/dokku/data/storage/$APP
+    mkdir -p /var/lib/dokku/data/storage/wordpress/$APP
+    chown -R 32767:32767 /var/lib/dokku/data/storage/wordpress/$APP
 
     # setup plugins persistent storage
-    mkdir -p /var/lib/dokku/data/storage/$APP/plugins
-    dokku storage:mount "$APP" /var/lib/dokku/data/storage/$APP/plugins:/app/wp-content/plugins
+    mkdir -p /var/lib/dokku/data/storage/wordpress/$APP/plugins
+    dokku storage:mount "$APP" /var/lib/dokku/data/storage/wordpress/$APP/plugins:/app/wp-content/plugins
 
     # setup upload persistent storage
-    mkdir -p /var/lib/dokku/data/storage/$APP/uploads
-    dokku storage:mount "$APP" /var/lib/dokku/data/storage/$APP/uploads:/app/wp-content/uploads
+    mkdir -p /var/lib/dokku/data/storage/wordpress/$APP/uploads
+    dokku storage:mount "$APP" /var/lib/dokku/data/storage/wordpress/$APP/uploads:/app/wp-content/uploads
 
     # setup languages persistent storage
-    mkdir -p /var/lib/dokku/data/storage/$APP/languages
-    dokku storage:mount "$APP" /var/lib/dokku/data/storage/$APP/languages:/app/wp-content/languages
+    mkdir -p /var/lib/dokku/data/storage/wordpress/$APP/languages
+    dokku storage:mount "$APP" /var/lib/dokku/data/storage/wordpress/$APP/languages:/app/wp-content/languages
 
     # setup your mysql database and link it to your app
     # if you're using MariaDB, replace mysql with mariadb
