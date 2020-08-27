@@ -9,7 +9,7 @@ source "$PLUGIN_BASE_PATH/common/functions"
 
 case "$1" in
   wordpress:init)
-		verify_app_name "$2"
+		# verify_app_name "$2"
     APP="$2"
 
     dokku apps:create "$APP"
