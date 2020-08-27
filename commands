@@ -16,7 +16,7 @@ case "$1" in
 
     # setup persistent storage
     mkdir -p /var/lib/dokku/data/storage/wordpress/$APP
-    chown -R 32767:32767 /var/lib/dokku/data/storage/wordpress/$APP
+    # chown -R 32767:32767 /var/lib/dokku/data/storage/wordpress/$APP
 
     # setup plugins persistent storage
     mkdir -p /var/lib/dokku/data/storage/wordpress/$APP/plugins
