@@ -31,8 +31,8 @@ case "$1" in
     dokku storage:mount "$APP" /var/lib/dokku/data/storage/wordpress/$APP/languages:/app/wp-content/languages
 
     # setup your mysql database and link it to your app
-    dokku mysql:create "$APP"-database
-    dokku mysql:link "$APP"-database "$APP"
+    dokku mysql:create "$APP"
+    dokku mysql:link "$APP" "$APP"
 
     # Generate random salts and add to dokku config
     curl -so /tmp/wp-salts https://api.wordpress.org/secret-key/1.1/salt/
