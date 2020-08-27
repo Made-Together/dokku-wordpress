@@ -16,7 +16,7 @@ case "$1" in
 
     # setup persistent storage
     mkdir -p /var/lib/dokku/data/storage/$APP
-    chown -R 32767:32767 /var/lib/dokku/data/storage/$APP
+    sudo chown -R 32767:32767 /var/lib/dokku/data/storage/$APP
 
     # setup plugins persistent storage
     mkdir -p /var/lib/dokku/data/storage/$APP/plugins
@@ -45,8 +45,7 @@ case "$1" in
     help_content_func () {
       declare desc="return help_content string"
       cat<<help_content
-    wordpress:init <app>, Bootstrap wordpress setup for <app>
-    wordpress:destroy <app>, Remove wordpress setup for <app>
+      wordpress, Plugin for managing WordPress instances
 help_content
     }
 
