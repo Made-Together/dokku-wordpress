@@ -2,9 +2,11 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 PLUGIN_BASE_PATH="$PLUGIN_PATH"
+
 if [[ -n $DOKKU_API_VERSION ]]; then
   PLUGIN_BASE_PATH="$PLUGIN_ENABLED_PATH"
 fi
+
 source "$PLUGIN_BASE_PATH/common/functions"
 
 case "$1" in
@@ -14,7 +16,7 @@ case "$1" in
 
     dokku apps:create "$APP"
 
-    # setup persistent storage
+    # setup persistent storage directory
     mkdir -p /var/lib/dokku/data/storage/wordpress/$APP
     # chown -R 32767:32767 /var/lib/dokku/data/storage/wordpress/$APP
 
