@@ -31,8 +31,6 @@ case "$1" in
     dokku storage:mount "$APP" /var/lib/dokku/data/storage/wordpress/$APP/languages:/app/wp-content/languages
 
     # setup your mysql database and link it to your app
-    # if you're using MariaDB, replace mysql with mariadb
-    export MYSQL_IMAGE_VERSION=\"5.6\"
     dokku mysql:create "$APP"-database
     dokku mysql:link "$APP"-database "$APP"
 
