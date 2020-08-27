@@ -36,14 +36,14 @@ case "$1" in
 
     # Generate random salts and add to dokku config
     curl -so /tmp/wp-salts https://api.wordpress.org/secret-key/1.1/salt/
-    sed -i.bak -e 's/ //g' -e "s/);//g" -e "s/define('/$(DOKKU_CMD) config:set $(APP_NAME) /g" -e "s/SALT',/SALT=/g" -e "s/KEY',[ ]*/KEY=/g" /tmp/wp-salts && rm /tmp/wp-salts.bak
+    sed -i.bak -e 's/ //g' -e "s/);//g" -e "s/define('/$DOKKU_CMD config:set $APP_NAME /g" -e "s/SALT',/SALT=/g" -e "s/KEY',[ ]*/KEY=/g" /tmp/wp-salts && rm /tmp/wp-salts.bak
 		;;
 
   help | wordpress:help)
     help_content_func () {
       declare desc="return help_content string"
       cat<<help_content
-wordpress, Plugin for managing WordPress instances
+  wordpress, Plugin for managing WordPress instances
 help_content
     }
 
